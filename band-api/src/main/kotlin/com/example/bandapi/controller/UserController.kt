@@ -2,6 +2,7 @@ package com.example.bandapi.controller
 
 import com.example.bandapi.dto.user.UserCreateRequest
 import com.example.bandapi.dto.user.UserResponse
+import com.example.bandapi.dto.user.UserUpdateRequest
 import com.example.bandapi.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -31,5 +32,21 @@ class UserController(
         @PathVariable id: Long
     ): UserResponse {
         return userService.findById(id)
+    }
+
+    @PutMapping("/{id}")
+    fun update(
+        @PathVariable id: Long,
+        @Valid @RequestBody request: UserUpdateRequest
+    ): UserResponse {
+        return userService.update(id, request)
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(
+        @PathVariable id: Long
+    ) {
+        userService.delete(id)
     }
 }
